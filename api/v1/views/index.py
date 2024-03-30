@@ -12,6 +12,7 @@ from models.user import User
 from models.amenity import Amenity
 from models import storage
 
+
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 

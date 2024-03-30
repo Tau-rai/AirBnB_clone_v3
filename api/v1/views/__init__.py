@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""This module initializes the application's blueprint"""
+
+
 from flask import Blueprint
 
 
