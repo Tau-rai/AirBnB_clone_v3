@@ -9,13 +9,14 @@ from os import getenv
 
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 app.register_blueprint(app_views, url_prefix='/api/v1')
 
 
 @app.errorhandler(404)
 def not_found(e):
     """"Custom error message"""
-    return jsonify({"error": "Not found"})
+    return jsonify({"error": "Not found"}), 404
 
 
 @app.teardown_appcontext
@@ -24,6 +25,6 @@ def close_db(Exception):
     storage.close()
 
 if __name__ == "__main__":
-    api_host = getenv('HBNB_API_HOST')
-    api_port = getenv('HBNB_API_PORT')
-    app.run(host=api_host or "0.0.0.0", port=api_port or 5000, threaded=True, debug=True)
+    api_host = getenv('HBNB_API_HOST', '0.0.0.0')
+    api_port = getenv('HBNB_API_PORT', 5000)
+    app.run(host=api_host, port=api_port, threaded=True, debug=True)
