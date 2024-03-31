@@ -49,7 +49,6 @@ def new_state():
     new_state = State(**data)
     storage.new(new_state)
     storage.save()
-    new_state_dict = new_state.to_dict()
     return jsonify(new_state.to_dict()), 201
 
 
