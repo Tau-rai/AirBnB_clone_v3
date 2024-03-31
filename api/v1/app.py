@@ -14,7 +14,7 @@ app.register_blueprint(app_views, url_prefix='/api/v1')
 
 
 @app.errorhandler(404)
-def not_found(e):
+def not_found(error):
     """"Custom error message"""
     return jsonify({"error": "Not found"}), 404
 
