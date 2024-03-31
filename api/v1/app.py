@@ -24,6 +24,7 @@ def close_db(Exception):
     """Closes an instance of storage"""
     storage.close()
 
+
 if __name__ == "__main__":
     api_host = getenv('HBNB_API_HOST', '0.0.0.0')
     api_port = getenv('HBNB_API_PORT', 5000)
