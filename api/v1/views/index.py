@@ -22,16 +22,10 @@ def status():
     """Defines the status of a request"""
     return jsonify({"status": "OK"})
 
-
-@app_views.route('/stats')
-def stats():
-    """Retreives the number of each object by type"""
-    counts = counts = {
-        'amenities': storage.count(Amenity),
-        'cities': storage.count(City),
-        'places': storage.count(Place),
-        'reviews': storage.count(Review),
-        'states': storage.count(State),
-        'users': storage.count(User)
-    }
-    return jsonify(counts)
+@app_views.route('/stats', methods=['GET'])
+def get_stats():
+    stats = {}
+    for cls_name, cls_object in classes.items():
+        count = storage.count(cls_name)
+        stats[cls_name] = count
+    return jsonify(stats)
