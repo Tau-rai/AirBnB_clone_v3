@@ -8,6 +8,7 @@ from models.place import Place
 from models.review import Review
 from models.user import User
 
+
 @app_views.route('/places/<place_id>/reviews', methods=['GET'])
 def get_place_reviews(place_id):
     """Retrieve all Review objects of a Place"""
