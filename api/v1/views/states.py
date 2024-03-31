@@ -41,10 +41,10 @@ def delete_state(state_id):
 def new_state():
     """Creates a new state object"""
     if not request.is_json:
-        abort(400, 'Not a JSON')
+        abort(400, description='Not a JSON')
     data = request.get_json()
     if 'name' not in data:
-        abort(400, 'Missing name')
+        abort(400, description='Missing name')
     new_state = State(**data)
     storage.new(new_state)
     storage.save()
@@ -58,7 +58,7 @@ def update_state(state_id):
     if state is None:
         abort(404)
     if not request.is_json:
-        abort(400, 'Not a JSON')
+        abort(400, description='Not a JSON')
     for key, value in request.get_json().items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(state, key, value)

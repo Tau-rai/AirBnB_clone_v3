@@ -41,10 +41,10 @@ def delete_amenity(amenity_id):
 def new_amenity():
     """Creates a new amenity object"""
     if not request.is_json:
-        abort(400, 'Not a JSON')
+        abort(400, description='Not a JSON')
     data = request.get_json()
     if 'name' not in data:
-        abort(400, 'Missing name')
+        abort(400, description='Missing name')
     new_amenity = Amenity(**data)
     storage.new(new_amenity)
     storage.save()
@@ -58,7 +58,7 @@ def update_amenity(amenity_id):
     if amenity is None:
         abort(404)
     if not request.is_json:
-        abort(400, 'Not a JSON')
+        abort(400, description='Not a JSON')
     for key, value in request.get_json().items():
         if key not in ['id', 'created_at', 'updated_at']:
             setattr(amenity, key, value)
