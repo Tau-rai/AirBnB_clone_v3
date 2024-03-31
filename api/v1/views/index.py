@@ -24,7 +24,11 @@ def stats():
     from models import storage
     classes = {"amenities": Amenity, "cities": City, "places": Place,
                "reviews": Review, "states": State, "users": User
-               }
+              }
 
-    all_cls_stats = {key: storage.count(val) for key, val in classes.items()}
+    all_cls_stats = {}
+    for key, val in classes.items():
+        count = storage.count(val)
+        all_cls_stats[key] = {"count": count, "items": [item.to_dict() for item in storage.all(val).values()]}
+
     return jsonify(all_cls_stats)
