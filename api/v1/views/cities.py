@@ -55,6 +55,7 @@ def create_city(state_id):
         abort(400, "Missing name")
 
     new_city = City(**req_json)
+    new_city.state_id = state.id
     req_json['state_id'] = state_id
     storage.new(new_city)
     storage.save()
