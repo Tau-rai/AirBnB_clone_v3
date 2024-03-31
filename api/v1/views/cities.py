@@ -11,7 +11,7 @@ from models.state import State
 @app_views.route('/states/<state_id>/cities', methods=['GET'])
 def get_state_cities(state_id):
     """Retrieve all City objects of a State"""
-    state = storage.get(State, escape(state_id))
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
 
@@ -22,7 +22,7 @@ def get_state_cities(state_id):
 @app_views.route('/cities/<city_id>', methods=['GET'])
 def get_city(city_id):
     """Retrieve a specific City object"""
-    city = storage.get(City, escape(city_id))
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
 
@@ -32,7 +32,7 @@ def get_city(city_id):
 @app_views.route('/cities/<city_id>', methods=['DELETE'])
 def delete_city(city_id):
     """Delete a City object"""
-    city = storage.get(City, escape(city_id))
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
 
@@ -44,7 +44,7 @@ def delete_city(city_id):
 @app_views.route('/states/<state_id>/cities', methods=['POST'])
 def create_city(state_id):
     """Create a new City object"""
-    state = storage.get(State, escape(state_id))
+    state = storage.get(State, state_id)
     if state is None:
         abort(404)
 
@@ -64,7 +64,7 @@ def create_city(state_id):
 @app_views.route('/cities/<city_id>', methods=['PUT'])
 def update_city(city_id):
     """Update a City object"""
-    city = storage.get(City, escape(city_id))
+    city = storage.get(City, city_id)
     if city is None:
         abort(404)
 
