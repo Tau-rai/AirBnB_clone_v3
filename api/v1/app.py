@@ -6,7 +6,7 @@ from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
 from os import getenv
-
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -23,6 +23,10 @@ def not_found(error):
 def close_db(Exception):
     """Closes an instance of storage"""
     storage.close()
+
+
+# Create CORS instance
+cors = CORS(app, resources={r"/*": {"origins": "http://0.0.0.0"}})
 
 
 if __name__ == "__main__":
