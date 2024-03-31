@@ -9,8 +9,11 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-from models.amenity import Amenity
+from models.amenity import Ameniyty
 from models import storage
+from storage import count
+
+
 
 
 classes = {"Amenity": Amenity, "City": City,
@@ -28,4 +31,4 @@ def get_stats():
     for cls_name, cls_object in classes.items():
         count = storage.count(cls_name)
         stats[cls_name] = count
-    return jsonify(stats)
+    return jsonify(stats), 200
