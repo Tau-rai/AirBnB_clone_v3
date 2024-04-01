@@ -2,7 +2,7 @@
 """Place Amenity API views module"""
 
 
-from flask import Flask, jsonify, request, abort
+from flask import jsonify, request, abort
 from api.v1.views import app_views
 from models import storage
 from models.place import Place
@@ -22,15 +22,14 @@ def get_place_amenities(place_id):
 @app_views.route(
         '/places/<place_id>/amenities/<amenity_id>', methods=['DELETE'])
 def delete_place_amenity(place_id, amenity_id):
-    """Deletes an Amenity object to a Place"""
+    """Deletes an Amenity object from a Place"""
     place = storage.get(Place, place_id)
     amenity = storage.get(Amenity, amenity_id)
-    if place is None or amenity is None or amenity not in place.amenities:
+    if place is None or amenity is None:
         abort(404)
-    if storage == 'db':
-        place.amenities.remove(amenity)
-    else:
-        place.amenity_ids.remove(amenity.id)
+    if amenity not in place.amenities:
+        abort(404)
+    place.amenities.remove(amenity)
     storage.save()
     return jsonify({}), 200
 
@@ -44,9 +43,6 @@ def link_amenity_to_place(place_id, amenity_id):
         abort(404)
     if amenity in place.amenities:
         return jsonify(amenity.to_dict()), 200
-    if storage == 'db':
-        place.amenities.append(amenity)
-    else:
-        place.amenity_ids.append(amenity.id)
+    place.amenities.append(amenity)
     storage.save()
     return jsonify(amenity.to_dict()), 201
