@@ -10,28 +10,21 @@ from models.review import Review
 from models.state import State
 from models.user import User
 from models.amenity import Amenity
-from models import storage
 
 
-classes = {"Amenity": Amenity, "City": City,
-           "Place": Place, "Review": Review, "State": State, "User": User}
-
-
-@app_views.route('/status')
+@app_views.route('/status', methods=["GET"])
 def status():
     """Defines the status of a request"""
     return jsonify({"status": "OK"})
 
 
-@app_views.route('/stats')
+@app_views.route("/stats", methods=["GET"])
 def stats():
-    """Retreives the number of each object by type"""
-    counts = counts = {
-        'amenities': storage.count(Amenity),
-        'cities': storage.count(City),
-        'places': storage.count(Place),
-        'reviews': storage.count(Review),
-        'states': storage.count(State),
-        'users': storage.count(User)
-    }
-    return jsonify(counts)
+    """Returns the number of items in storage in JSON format"""
+    from models import storage
+    classes = {"amenities": Amenity, "cities": City, "places": Place,
+               "reviews": Review, "states": State, "users": User
+               }
+
+    all_cls_stats = {key: storage.count(val) for key, val in classes.items()}
+    return jsonify(all_cls_stats)
