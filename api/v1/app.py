@@ -9,6 +9,7 @@ from os import getenv
 from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "http://0.0.0.0"}})
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views, url_prefix='/api/v1')
 
@@ -23,10 +24,6 @@ def not_found(error):
 def close_db(Exception):
     """Closes an instance of storage"""
     storage.close()
-
-
-# Create CORS instance
-cors = CORS(app, resources={r"/*": {"origins": "http://0.0.0.0"}})
 
 
 if __name__ == "__main__":
